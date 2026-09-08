@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ALL_PRODUCTS, REVIEWS_DATA, CATEGORIES, fmt } from "../data/products";
+import { ALL_PRODUCTS, REVIEWS_DATA, fmt } from "../data/products";
 import { Stars, ProductCard } from "../components/Shared";
 import { useApp } from "../context/AppContext";
 
@@ -16,7 +16,6 @@ export default function ProductPage({ product, onNavigate }) {
   const [qty, setQty] = useState(1);
 
   const wished = isWishlisted(product.id);
-  const catIcon = CATEGORIES.find(c => c.name === product.category)?.icon;
   const related = ALL_PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const productReviews = REVIEWS_DATA.filter(r => r.productId === product.id);
 
@@ -31,8 +30,7 @@ export default function ProductPage({ product, onNavigate }) {
     if (reviewText && reviewName) setSubmitted(true);
   };
 
-  // Simulated image slots
-  const images = [0, 1, 2, 3];
+  const images = [product.image];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-10">
@@ -49,11 +47,8 @@ export default function ProductPage({ product, onNavigate }) {
         {/* Gallery */}
         <div className="space-y-3">
           <div className="aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 relative">
-            <div className="w-full h-full flex items-center justify-center"
-              style={{background:`radial-gradient(ellipse at 60% 30%,${selectedColor}44,#0a0a0a)`}}>
-              <span className="text-[120px] opacity-30">{catIcon}</span>
-            </div>
-            <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 60px,#fff 60px,#fff 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,#fff 60px,#fff 61px)"}}/>
+            <img src={images[imgIdx]} alt={product.name} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
             {product.badge && (
               <div className="absolute top-4 left-4">
                 <span className={`text-white text-xs font-bold px-3 py-1.5 rounded-full ${product.badge==="Sale"?"bg-red-500":product.badge==="Limited"?"bg-purple-500":product.badge==="🔥 Hot"?"bg-orange-500":"bg-emerald-500"}`}>
@@ -67,10 +62,7 @@ export default function ProductPage({ product, onNavigate }) {
             {images.map(i => (
               <button key={i} onClick={() => setImgIdx(i)}
                 className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${imgIdx===i ? "border-white" : "border-zinc-800 hover:border-zinc-600"}`}>
-                <div className="w-full h-full flex items-center justify-center bg-zinc-900"
-                  style={{background:`radial-gradient(ellipse,${selectedColor}33,#111)`}}>
-                  <span className="text-2xl opacity-30">{catIcon}</span>
-                </div>
+                <img src={images[i]} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

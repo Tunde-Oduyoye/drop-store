@@ -27,6 +27,28 @@ export const ALL_PRODUCTS = [
   { id: 16, name: "Essential Boxer 3-Pack",category: "Boxers",  price: 14500, oldPrice: 18000, badge: "Sale",    colors: ["#1a1a1a","#1a2744","#f5f5f5"], sizes: ["S","M","L","XL"],          rating: 4.8, reviews: 76,  desc: "Three-pack of our bestselling boxer. Same premium modal-cotton blend. Three colourways in one pack.", stock: 35 },
 ];
 
+// Product photography selected to match each product's description. Images are
+// bundled with the storefront so cards and product pages do not depend on a
+// remote image host at runtime.
+const PRODUCT_IMAGES = {
+  1: "/images/products/void-tee.jpg",
+  2: "/images/products/carbon-jeans.jpg",
+  3: "/images/products/shadow-cap.jpg",
+  4: "/images/products/stealth-runner.jpg",
+  5: "/images/products/recon-hoodie.jpg",
+  6: "/images/products/urban-belt.jpg",
+  7: "/images/products/phantom-watch.jpg",
+  8: "/images/products/carbon-jeans.jpg",
+  9: "/images/products/void-tee.jpg",
+  10: "/images/products/void-tee.jpg",
+  11: "/images/products/void-tee.jpg",
+  12: "/images/products/urban-belt.jpg",
+  13: "/images/products/shadow-cap.jpg",
+  14: "/images/products/phantom-watch.jpg",
+  15: "/images/products/cloud-step.jpg",
+  16: "/images/products/void-tee.jpg",
+};
+
 export const REVIEWS_DATA = [
   { id: 1, name: "Emeka O.",   rating: 5, text: "Quality is insane. The Void Tee fits perfectly and material feels premium. Already ordered two more colours.", product: "Void Oversized Tee", date: "2 days ago",  avatar: "E", productId: 1 },
   { id: 2, name: "Tunde A.",   rating: 5, text: "Stealth Runners are the most comfortable shoes I've worn. True to size, arrived in 3 days. Packaging was clean.", product: "Stealth Runner",    date: "1 week ago",  avatar: "T", productId: 4 },
@@ -63,6 +85,9 @@ export const slugify = (str) =>
 
 // Attach a slug to every mock product (skips ones that already have one,
 // e.g. if they came from a real API that already provides slugs).
-ALL_PRODUCTS.forEach(p => { if (!p.slug) p.slug = slugify(p.name); });
+ALL_PRODUCTS.forEach(p => {
+  if (!p.slug) p.slug = slugify(p.name);
+  p.image = PRODUCT_IMAGES[p.id];
+});
 
 export const getProductBySlug = (slug) => ALL_PRODUCTS.find(p => p.slug === slug);

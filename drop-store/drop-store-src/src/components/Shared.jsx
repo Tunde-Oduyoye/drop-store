@@ -480,7 +480,6 @@ export function ProductCard({ product, onNavigate, compact = false }) {
   const wished = isWishlisted(product.id);
 
   const badgeColors = { "New":"bg-emerald-500","Sale":"bg-red-500","Limited":"bg-purple-500","🔥 Hot":"bg-orange-500" };
-  const catIcon = CATEGORIES.find(c => c.name === product.category)?.icon;
 
   const handleQuickAdd = (e) => {
     e.stopPropagation();
@@ -493,13 +492,12 @@ export function ProductCard({ product, onNavigate, compact = false }) {
     <div className="group relative bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-600 transition-all duration-300 cursor-pointer"
       onClick={() => onNavigate("PRODUCT", product)}>
       <div className="relative aspect-[3/4] overflow-hidden">
-        <div className="w-full h-full transition-transform duration-500 group-hover:scale-105"
-          style={{background:`radial-gradient(ellipse at 60% 30%, ${product.colors[colorIdx]}44, #0a0a0a)`}}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className={`opacity-30 group-hover:opacity-50 transition-opacity duration-300 ${compact ? "text-5xl" : "text-7xl"}`}>{catIcon}</span>
-          </div>
-          <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 40px,#fff 40px,#fff 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,#fff 40px,#fff 41px)"}}/>
-        </div>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
         {product.badge && <span className={`absolute top-3 left-3 ${badgeColors[product.badge] || "bg-zinc-600"} text-white text-[10px] font-semibold px-2 py-1 rounded-full`}>{product.badge}</span>}
         {product.stock <= 5 && <span className="absolute top-3 left-3 mt-6 bg-red-500/80 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full">Only {product.stock} left</span>}
         <button onClick={e => { e.stopPropagation(); toggleWishlist(product); }}
