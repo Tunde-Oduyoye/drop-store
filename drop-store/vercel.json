@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://drop-store-911z.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://drop-store-911z.vercel.app/:path*",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
