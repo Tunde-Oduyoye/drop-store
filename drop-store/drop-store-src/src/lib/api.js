@@ -3,7 +3,7 @@
 // When you deploy, change this to your live Render backend URL
 // (e.g. via an environment variable — see note at the bottom).
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://drop-server-0124.onrender.com/api" : "http://localhost:5000/api");
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
